@@ -24,6 +24,11 @@ $ bundle install
 
     rails g active_merchant:views:active_merchant_templates 
 
+**Example usage in Rails views:**
+
+ - ERB: `<%= render_am_views  payment_gateway:  :stripe, meta: {} %>`
+ - HAML: `= render_am_views  payment_gateway:  :stripe, meta: {}`
+
 **Contributing;**
 1.  Fork the repo.
 2.  Create your feature branch (`git checkout -b my-new-feature`)
