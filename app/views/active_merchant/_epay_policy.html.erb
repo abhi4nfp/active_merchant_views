@@ -1,0 +1,38 @@
+
+
+    <div class="main-wrapper container">
+        <form method="post" id="createTokenForm" name="createTokenForm">
+        </form>
+    </div>
+    <script>
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = "//api-sandbox.epaypolicy.com/scripts/client-side.js";
+      script.onload = function () {
+        var publicKey = '82604ac77dee40b5ae8fceea7ef12d3';
+        var impersonationAccountKey = null;
+        // Production or Sandbox
+        var mode = 'Sandbox';
+
+        configureTokenForm(publicKey, impersonationAccountKey, 'sandbox.epaypolicy.com', mode, tokenResponseCallback);
+
+        function tokenResponseCallback(postTokenResponseModel) {
+            console.log(postTokenResponseModel)
+            if (postTokenResponseModel.success) {
+                $('#response').text('Token Id: ' + postTokenResponseModel.id);
+                debugger;
+                var form = document.getElementById('<%= form_id || "createTokenForm" %>');
+                var hiddenInput = document.createElement('input');
+                hiddenInput.setAttribute('type', 'hidden');
+                hiddenInput.setAttribute('name', 'payment_nonce');
+                hiddenInput.setAttribute('value', postTokenResponseModel.id);
+                form.appendChild(hiddenInput);
+                form.submit();
+            } else {
+                $('#response').text('Error: ' + postTokenResponseModel.errorMessage);
+            }
+        }
+      }
+      document.getElementsByTagName("head")[0].appendChild(script);
+    </script>
+
